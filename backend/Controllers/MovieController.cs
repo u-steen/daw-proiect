@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Data;
 using backend.DTO.Movie;
+using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -21,7 +22,9 @@ public class MovieController : ControllerBase
     public IActionResult GetAll()
     {
         var movies = _context.Movie.ToList();
-        return Ok(movies);
+        // Convertim fiecare film in dto-ul lui cu Linq
+        var moviesDto = movies.Select(movie => _mapper.Map<MovieDto>(movie)).ToList();
+        return Ok(moviesDto);
     }
 
     [HttpGet("{id}")]
