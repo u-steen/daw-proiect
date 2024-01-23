@@ -10,7 +10,7 @@ public class ApplicationDBContext : DbContext
 
     }
 
-    public DbSet<Movie> Movie { get; set; }
+    public DbSet<Movie> Movies { get; set; }
     public DbSet<Review> Reviews { get; set; }
     // public DbSet<Categorie> Caterogie{ get; set; }
 

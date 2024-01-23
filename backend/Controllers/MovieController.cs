@@ -21,7 +21,7 @@ public class MovieController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-        var movies = _context.Movie.ToList();
+        var movies = _context.Movies.ToList();
         // Convertim fiecare film in dto-ul lui cu Linq
         var moviesDto = movies.Select(movie => _mapper.Map<MovieDto>(movie)).ToList();
         return Ok(moviesDto);
@@ -31,10 +31,19 @@ public class MovieController : ControllerBase
     public IActionResult GetMovie([FromRoute] int id)
     {
         // Preferam Find in loc de FirstOrDefault pt id
-        var movie = _context.Movie.Find(id);
+        var movie = _context.Movies.Find(id);
         if (movie == null)
             return NotFound();
         var movieDto = _mapper.Map<MovieDto>(movie);
         return Ok(movieDto);
+    }
+
+    [HttpPost]
+    public IActionResult CreateMovie([FromBody] CreateMovieDto creaetdMovie)
+    {
+        var movie = _mapper.Map<Movie>(creaetdMovie);
+        _context.Movies.Add(movie);
+        _context.SaveChanges();
+        return CreatedAtAction(nameof(GetMovie), new { movie.Id }, _mapper.Map<MovieDto>(movie));
     }
 }
