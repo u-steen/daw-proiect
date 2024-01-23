@@ -1,4 +1,6 @@
-﻿using backend.Data;
+﻿using AutoMapper;
+using backend.Data;
+using backend.DTO.Movie;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -8,9 +10,11 @@ namespace backend.Controllers;
 public class MovieController : ControllerBase
 {
     private readonly ApplicationDBContext _context;
-    public MovieController(ApplicationDBContext context)
+    private readonly IMapper _mapper;
+    public MovieController(ApplicationDBContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -27,6 +31,7 @@ public class MovieController : ControllerBase
         var movie = _context.Movie.Find(id);
         if (movie == null)
             return NotFound();
-        return Ok(movie);
+        var movieDto = _mapper.Map<MovieDto>(movie);
+        return Ok(movieDto);
     }
 }
