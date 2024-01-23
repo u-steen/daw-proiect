@@ -65,4 +65,18 @@ public class MovieController : ControllerBase
         _context.SaveChanges();
         return Ok(_mapper.Map<MovieDto>(movie));
     }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public IActionResult DeleteMovie([FromRoute] int id)
+    {
+        var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+        _context.Movies.Remove(movie);
+        _context.SaveChanges();
+        return NoContent();
+    }
 }
