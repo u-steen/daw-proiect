@@ -46,4 +46,23 @@ public class MovieController : ControllerBase
         _context.SaveChanges();
         return CreatedAtAction(nameof(GetMovie), new { movie.Id }, _mapper.Map<MovieDto>(movie));
     }
+
+    [HttpPut]
+    [Route("{id}")]
+    public IActionResult UpdateMovie([FromRoute] int id, [FromBody] UpdateMovieDto updatedMovie)
+    {
+        var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+        if (movie == null)
+        {
+            return NotFound();
+        }
+
+        movie.Titlu = updatedMovie.Titlu;
+        movie.Director= updatedMovie.Director;
+        movie.An= updatedMovie.An;
+        // TODO: Categorii
+
+        _context.SaveChanges();
+        return Ok(_mapper.Map<MovieDto>(movie));
+    }
 }
