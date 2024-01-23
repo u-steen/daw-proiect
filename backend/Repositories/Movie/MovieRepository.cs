@@ -1,0 +1,63 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using backend.Data;
+using backend.DTO.Movie;
+using backend.Repositories;
+using backend.Models;
+
+namespace backend.Repositories.Movie;
+
+public class MovieRepository : IMovieRepository
+{
+    private readonly ApplicationDBContext _context;
+    public MovieRepository(ApplicationDBContext context)
+    {
+        _context = context;
+    }
+    public async Task<List<Models.Movie>> GetAllAsync()
+    {
+        return await _context.Movies.ToListAsync();
+    }
+
+    public async Task<Models.Movie?> GetByIdAsync(int id)
+    {
+        return await _context.Movies.FindAsync(id);
+    }
+
+    public async Task<Models.Movie> CreateMovieAsync(Models.Movie movie)
+    {
+        await _context.Movies.AddAsync(movie);
+        await _context.SaveChangesAsync();
+        return movie;
+    }
+
+    public async Task<Models.Movie?> UpdateMovieAsync(int id, UpdateMovieDto updatedMovie)
+    {
+        var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+        if (movie == null)
+        {
+            return null;
+        }
+
+        movie.Titlu = updatedMovie.Titlu;
+        movie.Director= updatedMovie.Director;
+        movie.An= updatedMovie.An;
+        // TODO: Categorii
+
+        await _context.SaveChangesAsync();
+        return movie;
+    }
+
+    public async Task<Models.Movie?> DeleteMovieAsync(int id)
+    {
+
+        var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+        if (movie == null)
+        {
+            return null;
+        }
+        _context.Movies.Remove(movie);
+        await _context.SaveChangesAsync();
+        return movie;
+    }
+}
