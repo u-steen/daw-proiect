@@ -3,6 +3,7 @@ using backend.Data;
 using backend.DTO.Movie;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers;
 
@@ -19,19 +20,19 @@ public class MovieController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
-        var movies = _context.Movies.ToList();
-        // Convertim fiecare film in dto-ul lui cu Linq
+        // TODO: Nu stiu daca trebuie si la moviesDto async
+        var movies = await _context.Movies.ToListAsync();
         var moviesDto = movies.Select(movie => _mapper.Map<MovieDto>(movie)).ToList();
         return Ok(moviesDto);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetMovie([FromRoute] int id)
+    public async Task<IActionResult> GetMovie([FromRoute] int id)
     {
         // Preferam Find in loc de FirstOrDefault pt id
-        var movie = _context.Movies.Find(id);
+        var movie = await _context.Movies.FindAsync(id);
         if (movie == null)
             return NotFound();
         var movieDto = _mapper.Map<MovieDto>(movie);
@@ -39,19 +40,19 @@ public class MovieController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateMovie([FromBody] CreateMovieDto creaetdMovie)
+    public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto creaetdMovie)
     {
         var movie = _mapper.Map<Movie>(creaetdMovie);
-        _context.Movies.Add(movie);
-        _context.SaveChanges();
+        await _context.Movies.AddAsync(movie);
+        await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetMovie), new { movie.Id }, _mapper.Map<MovieDto>(movie));
     }
 
     [HttpPut]
     [Route("{id}")]
-    public IActionResult UpdateMovie([FromRoute] int id, [FromBody] UpdateMovieDto updatedMovie)
+    public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] UpdateMovieDto updatedMovie)
     {
-        var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+        var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
         if (movie == null)
         {
             return NotFound();
@@ -62,21 +63,21 @@ public class MovieController : ControllerBase
         movie.An= updatedMovie.An;
         // TODO: Categorii
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return Ok(_mapper.Map<MovieDto>(movie));
     }
 
     [HttpDelete]
     [Route("{id}")]
-    public IActionResult DeleteMovie([FromRoute] int id)
+    public async Task<IActionResult> DeleteMovie([FromRoute] int id)
     {
-        var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+        var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
         if (movie == null)
         {
             return NotFound();
         }
         _context.Movies.Remove(movie);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return NoContent();
     }
 }
