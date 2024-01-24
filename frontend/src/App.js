@@ -1,31 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import './Components/Movie'
+import {useEffect, useState} from "react";
+import Movie from "./Components/Movie";
 
 function App() {
+    const [movies, setMovies] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch("/api/movie");
+            const data = await response.json();
+            console.log(data);
+            setMovies(data);
+        }
+        fetchData();
+    }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p
-            onClick={async () => {
-                const response = await fetch("api/movie");
-                console.log(response);
-                const data = await response.json();
-                console.log(data);
-            }}
-        >
-          Make request
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+          {movies.map(movie => (
+              <div key={movie.id}>
+                  <Movie
+                  titlu={movie.titlu}
+                  director = {movie.director}
+                  an = {movie.an}>
+                  </Movie>
+              </div>
+          ))}
+      </>
   );
 }
 
