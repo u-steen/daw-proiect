@@ -27,4 +27,13 @@ public class ReviewController : ControllerBase
         return Ok(reviewsDto);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        var review = await _repo.GetById(id);
+        if (review == null)
+            return NotFound();
+        return Ok(_mapper.Map<ReviewDto>(review));
+    }
+
 }

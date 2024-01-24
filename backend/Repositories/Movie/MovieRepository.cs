@@ -16,12 +16,12 @@ public class MovieRepository : IMovieRepository
     }
     public async Task<List<Models.Movie>> GetAllAsync()
     {
-        return await _context.Movies.ToListAsync();
+        return await _context.Movies.Include(m => m.Reviews).ToListAsync();
     }
 
     public async Task<Models.Movie?> GetByIdAsync(int id)
     {
-        return await _context.Movies.FindAsync(id);
+        return await _context.Movies.Include(m => m.Reviews).FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public async Task<Models.Movie> CreateMovieAsync(Models.Movie movie)

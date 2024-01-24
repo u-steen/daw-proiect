@@ -15,4 +15,9 @@ public class ReviewRepository : IReviewRepository
     {
         return await _context.Reviews.ToListAsync();
     }
+
+    public async Task<Models.Review?> GetById(int id)
+    {
+        return await _context.Reviews.FirstOrDefaultAsync(x => x.Id == id);
+    }
 }

@@ -25,7 +25,6 @@ public class MovieController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        // TODO: Nu stiu daca trebuie si la moviesDto async
         var movies = await _movieRepo.GetAllAsync();
         var moviesDto = movies.Select(movie => _mapper.Map<MovieDto>(movie)).ToList();
         return Ok(moviesDto);
