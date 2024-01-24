@@ -53,4 +53,16 @@ public class ReviewController : ControllerBase
         await _reviewRepo.CreateAsync(review);
         return CreatedAtAction(nameof(GetById), new { id = review.Id }, _mapper.Map<ReviewDto>(review));
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        Review review = await _reviewRepo.DeleteAsync(id);
+        if (review == null)
+        {
+            return NotFound("Not found");
+        }
+
+        return Ok(_mapper.Map<ReviewDto>(review));
+    }
 }
