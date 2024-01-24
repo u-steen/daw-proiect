@@ -12,5 +12,6 @@ public interface IMovieRepository
     Task<Models.Movie> CreateMovieAsync(Models.Movie movie);
     Task<Models.Movie?> UpdateMovieAsync(int id, UpdateMovieDto movieDto);
     Task<Models.Movie?> DeleteMovieAsync(int id);
+    Task<bool> MovieExists(int id);
 
 }

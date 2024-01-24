@@ -60,4 +60,9 @@ public class MovieRepository : IMovieRepository
         await _context.SaveChangesAsync();
         return movie;
     }
+
+    public Task<bool> MovieExists(int id)
+    {
+        return _context.Movies.AnyAsync(m => m.Id == id);
+    }
 }

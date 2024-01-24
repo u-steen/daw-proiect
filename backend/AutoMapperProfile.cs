@@ -12,5 +12,6 @@ public class AutoMapperProfile : Profile
         CreateMap<Movie, MovieDto>();
         CreateMap<CreateMovieDto, Movie>();
         CreateMap<Review, ReviewDto>();
+        CreateMap<CreateReviewDto, Review>();
     }
 }

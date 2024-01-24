@@ -20,4 +20,11 @@ public class ReviewRepository : IReviewRepository
     {
         return await _context.Reviews.FirstOrDefaultAsync(x => x.Id == id);
     }
+
+    public async Task<Models.Review> CreateAsync(Models.Review review)
+    {
+        await _context.Reviews.AddAsync(review);
+        await _context.SaveChangesAsync();
+        return review;
+    }
 }
