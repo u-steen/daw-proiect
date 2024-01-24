@@ -6,8 +6,15 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+        <p
+            onClick={async () => {
+                const response = await fetch("api/movie");
+                console.log(response);
+                const data = await response.json();
+                console.log(data);
+            }}
+        >
+          Make request
         </p>
         <a
           className="App-link"
