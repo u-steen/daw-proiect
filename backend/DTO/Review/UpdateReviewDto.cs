@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.DTO.Review;
 
-public class CreateReviewDto
+public class UpdateReviewDto
 {
     [Required]
     [MinLength(10, ErrorMessage = "Review-ul trebuie sa aiba macar 10 caractere")]

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using backend.DTO.Movie;
 using backend.DTO.Review;
 using backend.Models;
 using backend.Repositories.Movie;
@@ -61,6 +60,18 @@ public class ReviewController : ControllerBase
         if (review == null)
         {
             return NotFound("Not found");
+        }
+
+        return Ok(_mapper.Map<ReviewDto>(review));
+    }
+    [HttpPut]
+    [Route("{id:int}")]
+    public async Task<IActionResult> UpdateReview([FromRoute] int id, [FromBody] UpdateReviewDto updatedReview)
+    {
+        var review = await _reviewRepo.UpdateReviewAsync(id, updatedReview);
+        if (review == null)
+        {
+            return NotFound();
         }
 
         return Ok(_mapper.Map<ReviewDto>(review));

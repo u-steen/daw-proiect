@@ -1,4 +1,5 @@
 ﻿using backend.Data;
+using backend.DTO.Review;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,21 @@ public class ReviewRepository : IReviewRepository
         }
 
         _context.Reviews.Remove(review);
+        await _context.SaveChangesAsync();
+        return review;
+    }
+
+    public async Task<Models.Review?> UpdateReviewAsync(int id, UpdateReviewDto updatedReview)
+    {
+        var review = await _context.Reviews.FirstOrDefaultAsync(x => x.Id == id);
+        if (review == null)
+        {
+            return null;
+        }
+
+        review.Comment = updatedReview.Comment;
+        review.Rating= updatedReview.Rating;
+
         await _context.SaveChangesAsync();
         return review;
     }
