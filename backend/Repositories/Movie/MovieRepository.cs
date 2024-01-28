@@ -28,7 +28,9 @@ public class MovieRepository : IMovieRepository
                     movies.OrderBy(x => x.Titlu);
             }
         }
-        return await movies.ToListAsync();
+
+        var skipNum = query.pageSize * (query.pageNumber - 1);
+        return await movies.Skip(skipNum).Take(query.pageSize).ToListAsync();
     }
 
     public async Task<Models.Movie?> GetByIdAsync(int id)
