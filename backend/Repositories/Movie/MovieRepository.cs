@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.DTO.Movie;
+using backend.Helpers;
 
 namespace backend.Repositories.Movie;
 
@@ -11,9 +12,14 @@ public class MovieRepository : IMovieRepository
     {
         _context = context;
     }
-    public async Task<List<Models.Movie>> GetAllAsync()
+    public async Task<List<Models.Movie>> GetAllAsync(QueryObject query)
     {
-        return await _context.Movies.Include(m => m.Reviews).ToListAsync();
+        var movies = _context.Movies.Include(m => m.Reviews).AsQueryable();
+        if (!string.IsNullOrWhiteSpace(query.titlu))
+        {
+            movies = movies.Where(m => m.Titlu.Contains(query.titlu));
+        }
+        return await movies.ToListAsync();
     }
 
     public async Task<Models.Movie?> GetByIdAsync(int id)
@@ -37,8 +43,8 @@ public class MovieRepository : IMovieRepository
         }
 
         movie.Titlu = updatedMovie.Titlu;
-        movie.Director= updatedMovie.Director;
-        movie.An= updatedMovie.An;
+        movie.Director = updatedMovie.Director;
+        movie.An = updatedMovie.An;
         // TODO: Categorii
 
         await _context.SaveChangesAsync();

@@ -4,6 +4,7 @@ using backend.DTO.Movie;
 using backend.Models;
 using backend.Repositories.Movie;
 using Microsoft.AspNetCore.Mvc;
+using backend.Helpers;
 
 namespace backend.Controllers;
 
@@ -22,12 +23,12 @@ public class MovieController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var movies = await _movieRepo.GetAllAsync();
+        var movies = await _movieRepo.GetAllAsync(query);
         var moviesDto = movies.Select(movie => _mapper.Map<MovieDto>(movie)).ToList();
         return Ok(moviesDto);
     }
@@ -35,7 +36,7 @@ public class MovieController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetMovie([FromRoute] int id)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         var movie = await _movieRepo.GetByIdAsync(id);
@@ -48,7 +49,7 @@ public class MovieController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto createdMovie)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         var movie = _mapper.Map<Movie>(createdMovie);
@@ -60,7 +61,7 @@ public class MovieController : ControllerBase
     [Route("{id:int}")]
     public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] UpdateMovieDto updatedMovie)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         var movie = await _movieRepo.UpdateMovieAsync(id, updatedMovie);
@@ -76,7 +77,7 @@ public class MovieController : ControllerBase
     [Route("{id:int}")]
     public async Task<IActionResult> DeleteMovie([FromRoute] int id)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         var movie = await _movieRepo.DeleteMovieAsync(id);
