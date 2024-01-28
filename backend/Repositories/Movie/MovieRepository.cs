@@ -19,6 +19,15 @@ public class MovieRepository : IMovieRepository
         {
             movies = movies.Where(m => m.Titlu.Contains(query.titlu));
         }
+        if (!string.IsNullOrWhiteSpace(query.sortBy))
+        {
+            if (query.sortBy.Equals("Title", StringComparison.OrdinalIgnoreCase))
+            {
+                movies = query.isDescending ? 
+                    movies.OrderByDescending(x => x.Titlu) : 
+                    movies.OrderBy(x => x.Titlu);
+            }
+        }
         return await movies.ToListAsync();
     }
 
