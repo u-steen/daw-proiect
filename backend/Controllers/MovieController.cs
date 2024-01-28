@@ -24,6 +24,9 @@ public class MovieController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var movies = await _movieRepo.GetAllAsync();
         var moviesDto = movies.Select(movie => _mapper.Map<MovieDto>(movie)).ToList();
         return Ok(moviesDto);
@@ -32,7 +35,9 @@ public class MovieController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetMovie([FromRoute] int id)
     {
-        // Preferam Find in loc de FirstOrDefault pt id
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var movie = await _movieRepo.GetByIdAsync(id);
         if (movie == null)
             return NotFound();
@@ -43,6 +48,9 @@ public class MovieController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateMovie([FromBody] CreateMovieDto createdMovie)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var movie = _mapper.Map<Movie>(createdMovie);
         await _movieRepo.CreateMovieAsync(movie);
         return CreatedAtAction(nameof(GetMovie), new { movie.Id }, _mapper.Map<MovieDto>(movie));
@@ -52,6 +60,9 @@ public class MovieController : ControllerBase
     [Route("{id:int}")]
     public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] UpdateMovieDto updatedMovie)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var movie = await _movieRepo.UpdateMovieAsync(id, updatedMovie);
         if (movie == null)
         {
@@ -65,6 +76,9 @@ public class MovieController : ControllerBase
     [Route("{id:int}")]
     public async Task<IActionResult> DeleteMovie([FromRoute] int id)
     {
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var movie = await _movieRepo.DeleteMovieAsync(id);
         if (movie == null)
         {

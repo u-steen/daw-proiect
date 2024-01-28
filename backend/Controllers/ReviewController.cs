@@ -25,6 +25,9 @@ public class ReviewController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var reviews = await _reviewRepo.GetAll();
         var reviewsDto = reviews.Select(review => _mapper.Map<ReviewDto>(review)).ToList();
         return Ok(reviewsDto);
@@ -33,6 +36,9 @@ public class ReviewController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var review = await _reviewRepo.GetById(id);
         if (review == null)
             return NotFound();
@@ -42,6 +48,9 @@ public class ReviewController : ControllerBase
     [HttpPost("{movieId:int}")]
     public async Task<IActionResult> Create([FromRoute] int movieId, [FromBody] CreateReviewDto createdReview)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         if (!await _movieRepo.MovieExists(movieId))
         {
             return BadRequest("Movie does not exist");
@@ -56,6 +65,9 @@ public class ReviewController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         Review? review = await _reviewRepo.DeleteAsync(id);
         if (review == null)
         {
@@ -68,6 +80,9 @@ public class ReviewController : ControllerBase
     [Route("{id:int}")]
     public async Task<IActionResult> UpdateReview([FromRoute] int id, [FromBody] UpdateReviewDto updatedReview)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         var review = await _reviewRepo.UpdateReviewAsync(id, updatedReview);
         if (review == null)
         {
