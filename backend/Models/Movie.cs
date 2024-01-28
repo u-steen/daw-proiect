@@ -7,7 +7,7 @@ public class Movie
     public string Director { get; set; } = string.Empty;
     public int An { get; set; }
     // Many to One
-    public List<Review> Reviews { get; set; }
+    public List<Review>? Reviews { get; set; }
     // Many to Many
-    public List<Categorie> Categorii { get; set; }
+    public List<Categorie>? Categorii { get; set; }
 }

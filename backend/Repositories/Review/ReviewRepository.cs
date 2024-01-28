@@ -1,7 +1,5 @@
 ﻿using backend.Data;
 using backend.DTO.Review;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repositories.Review;
@@ -32,7 +30,7 @@ public class ReviewRepository : IReviewRepository
 
     public async Task<Models.Review?> DeleteAsync(int id)
     {
-        Models.Review review = await _context.Reviews.FirstOrDefaultAsync(r => r.Id == id);
+        Models.Review? review = await _context.Reviews.FirstOrDefaultAsync(r => r.Id == id);
         if (review == null)
         {
             return null;
@@ -52,7 +50,7 @@ public class ReviewRepository : IReviewRepository
         }
 
         review.Comment = updatedReview.Comment;
-        review.Rating= updatedReview.Rating;
+        review.Rating = updatedReview.Rating;
 
         await _context.SaveChangesAsync();
         return review;

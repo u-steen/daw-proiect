@@ -4,7 +4,6 @@ using backend.DTO.Movie;
 using backend.Models;
 using backend.Repositories.Movie;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers;
 

@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.DTO.Movie;
-using backend.Repositories;
-using backend.Models;
 
 namespace backend.Repositories.Movie;
 
