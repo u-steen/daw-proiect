@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -18,9 +17,7 @@ namespace backend.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("backend.Models.Categorie", b =>
                 {
@@ -28,20 +25,18 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int?>("MovieId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nume")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Categorie");
+                    b.ToTable("Caterogie");
                 });
 
             modelBuilder.Entity("backend.Models.Movie", b =>
@@ -50,22 +45,20 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("An")
                         .HasColumnType("int");
 
                     b.Property<string>("Director")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Titlu")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("backend.Models.Review", b =>
@@ -74,11 +67,9 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("MovieId")
                         .HasColumnType("int");
@@ -87,7 +78,7 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TimpCreare")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 

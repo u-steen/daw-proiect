@@ -15,10 +15,6 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddDbContext<ApplicationDBContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddCors(options =>
@@ -28,6 +24,9 @@ builder.Services.AddCors(options =>
                                         .AllowAnyMethod()
                                         .AllowAnyHeader());
 });
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 app.UseCors("AllowReactApp");
