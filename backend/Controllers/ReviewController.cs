@@ -31,7 +31,7 @@ public class ReviewController : ControllerBase
         return Ok(reviewsDto);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         var review = await _reviewRepo.GetById(id);
@@ -40,7 +40,7 @@ public class ReviewController : ControllerBase
         return Ok(_mapper.Map<ReviewDto>(review));
     }
 
-    [HttpPost("{movieId}")]
+    [HttpPost("{movieId:int}")]
     public async Task<IActionResult> Create([FromRoute] int movieId, [FromBody] CreateReviewDto createdReview)
     {
         if (!await _movieRepo.MovieExists(movieId))
@@ -54,10 +54,10 @@ public class ReviewController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = review.Id }, _mapper.Map<ReviewDto>(review));
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        Review review = await _reviewRepo.DeleteAsync(id);
+        Review? review = await _reviewRepo.DeleteAsync(id);
         if (review == null)
         {
             return NotFound("Not found");

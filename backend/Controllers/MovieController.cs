@@ -30,7 +30,7 @@ public class MovieController : ControllerBase
         return Ok(moviesDto);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetMovie([FromRoute] int id)
     {
         // Preferam Find in loc de FirstOrDefault pt id
@@ -50,7 +50,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> UpdateMovie([FromRoute] int id, [FromBody] UpdateMovieDto updatedMovie)
     {
         var movie = await _movieRepo.UpdateMovieAsync(id, updatedMovie);
@@ -63,7 +63,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> DeleteMovie([FromRoute] int id)
     {
         var movie = await _movieRepo.DeleteMovieAsync(id);
