@@ -1,5 +1,8 @@
-﻿namespace backend.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace backend.Models;
+
+[Table("Reviews")]
 public class Review
 {
     public int? MovieId { get; set; }

@@ -1,5 +1,8 @@
-﻿namespace backend.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace backend.Models;
+
+[Table("Movies")]
 public class Movie
 {
     public int Id { get; set; }
@@ -9,5 +12,5 @@ public class Movie
     // Many to One
     public List<Review>? Reviews { get; set; }
     // Many to Many
-    public List<Categorie>? Categorii { get; set; }
+    public List<MovieCategorie> MovieCategorii { get; set; } = new List<MovieCategorie>();
 }

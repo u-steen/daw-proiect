@@ -47,13 +47,13 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7b746bf2-cf7e-45ba-9728-9d9e3ee81f8c",
+                            Id = "35d4fad2-1cbe-43c9-bbae-215b87d49075",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a581cd00-e353-4a1d-8fed-7df17e8ca4d6",
+                            Id = "2d9259e8-f5c5-45a3-847d-036a9d92c08e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -231,18 +231,13 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nume")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("Caterogie");
+                    b.ToTable("Categorii");
                 });
 
             modelBuilder.Entity("backend.Models.Movie", b =>
@@ -265,6 +260,21 @@ namespace backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("backend.Models.MovieCategorie", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategorieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "CategorieId");
+
+                    b.HasIndex("CategorieId");
+
+                    b.ToTable("MovieCategorii");
                 });
 
             modelBuilder.Entity("backend.Models.Review", b =>
@@ -344,11 +354,23 @@ namespace backend.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("backend.Models.Categorie", b =>
+            modelBuilder.Entity("backend.Models.MovieCategorie", b =>
                 {
-                    b.HasOne("backend.Models.Movie", null)
-                        .WithMany("Categorii")
-                        .HasForeignKey("MovieId");
+                    b.HasOne("backend.Models.Categorie", "Categorie")
+                        .WithMany("MovieCategorii")
+                        .HasForeignKey("CategorieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.Movie", "Movie")
+                        .WithMany("MovieCategorii")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categorie");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("backend.Models.Review", b =>
@@ -360,9 +382,14 @@ namespace backend.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("backend.Models.Categorie", b =>
+                {
+                    b.Navigation("MovieCategorii");
+                });
+
             modelBuilder.Entity("backend.Models.Movie", b =>
                 {
-                    b.Navigation("Categorii");
+                    b.Navigation("MovieCategorii");
 
                     b.Navigation("Reviews");
                 });
