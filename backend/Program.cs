@@ -2,6 +2,7 @@ using backend.Data;
 using backend.Models;
 using backend.Repositories.Movie;
 using backend.Repositories.Review;
+using backend.Service.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
