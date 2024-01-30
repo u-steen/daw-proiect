@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.DTO.Categorie;
 using backend.DTO.Movie;
 using backend.DTO.Review;
 using backend.Models;
@@ -13,5 +14,7 @@ public class AutoMapperProfile : Profile
         CreateMap<CreateMovieDto, Movie>();
         CreateMap<Review, ReviewDto>();
         CreateMap<CreateReviewDto, Review>();
+        CreateMap<Categorie, CategorieDto>();
+        CreateMap<CreateCategorieDto, Categorie>();
     }
 }

@@ -1,5 +1,6 @@
 using backend.Data;
 using backend.Models;
+using backend.Repositories.Categorie;
 using backend.Repositories.Movie;
 using backend.Repositories.Review;
 using backend.Service.TokenService;
@@ -23,6 +24,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddCors(options =>
 {

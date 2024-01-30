@@ -1,11 +1,13 @@
+using backend.DTO.Categorie;
+
 namespace backend.Repositories.Categorie
 {
-    interface ICategorieRepository
+    public interface ICategorieRepository
     {
-        Task<List<Models.Categorie>> GetAllAsync();
-        Task<Models.Categorie?> GetByIdAsync(int id);
-        Task<Models.Categorie> CreateMovieAsync(Models.Categorie movie);
-        // Task<Models.Categorie?> UpdateMovieAsync(int id, UpdateCategorieDto movieDto);
-        Task<Models.Categorie?> DeleteMovieAsync(int id);
+        public Task<List<Models.Categorie>> GetAllAsync();
+        public Task<Models.Categorie?> GetByIdAsync(int id);
+        public Task<Models.Categorie> CreateCategorieAsync(CreateCategorieDto categorie);
+        public Task<Models.Categorie?> UpdateCategorieAsync(int id, CategorieDto CategorieDto);
+        public Task<Models.Categorie?> DeleteCategorieAsync(int id);
     }
 }

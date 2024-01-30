@@ -12,7 +12,7 @@ public class ApplicationDBContext : IdentityDbContext<AppUser>
         : base(dbContextOptions) { }
     public DbSet<Movie> Movies { get; set; }
     public DbSet<Review> Reviews { get; set; }
-    public DbSet<Categorie> Caterogie { get; set; }
+    public DbSet<Categorie> Categorii{ get; set; }
     public DbSet<MovieCategorie> MovieCategorii { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
