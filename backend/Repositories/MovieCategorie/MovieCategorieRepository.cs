@@ -30,8 +30,18 @@ public class MovieCategorieRepository : IMovieCategorieRepository
 
     public async Task<MovieCategorie> CreateMovieCategorieAsync(MovieCategorie movieCategorie)
     {
-        _context.AddAsync(movieCategorie);
-        _context.SaveChangesAsync();
+        await _context.AddAsync(movieCategorie);
+        await _context.SaveChangesAsync();
         return movieCategorie;
+    }
+
+    public async Task<MovieCategorie> DeleteMovieCategorieAsync(int movieId, int categorieId)
+    {
+        var mc = await _context.MovieCategorii.FirstOrDefaultAsync(
+            x =>
+                x.MovieId == movieId && x.CategorieId == categorieId);
+        _context.MovieCategorii.Remove(mc);
+        await _context.SaveChangesAsync();
+        return mc;
     }
 }

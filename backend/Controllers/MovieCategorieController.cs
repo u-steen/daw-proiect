@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
-[Route("movie-categorie")]
+[Route("api/movie-categorie")]
 [ApiController]
 public class MovieCategorieController : ControllerBase
 {
@@ -53,5 +53,17 @@ public class MovieCategorieController : ControllerBase
         await _mcRepo.CreateMovieCategorieAsync(mc);
 
         return Created();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteMovieCategorie(int movieId, int categorieId)
+    {
+        var mc = await _mcRepo.DeleteMovieCategorieAsync(movieId, categorieId);
+        if (mc == null)
+        {
+            return BadRequest("Relatia nu exista");
+        }
+
+        return Ok(mc);
     }
 }
