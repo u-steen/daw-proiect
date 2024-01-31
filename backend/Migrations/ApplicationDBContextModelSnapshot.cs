@@ -241,7 +241,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorii");
+                    b.ToTable("Categorii", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Movie", b =>
@@ -263,7 +263,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.MovieCategorie", b =>
@@ -280,7 +280,7 @@ namespace backend.Migrations
 
                     b.HasIndex("CategorieId");
 
-                    b.ToTable("MovieCategorii");
+                    b.ToTable("MovieCategorii", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Review", b =>
@@ -306,7 +306,7 @@ namespace backend.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
