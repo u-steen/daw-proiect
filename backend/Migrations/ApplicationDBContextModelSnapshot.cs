@@ -47,13 +47,13 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d168e255-a4bc-4efe-b659-5f5a5e0e6a87",
+                            Id = "653b1a6f-7f78-49c6-b94a-ef943683e4f2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d5089bce-6d63-4a57-a596-3b50dbb4d733",
+                            Id = "9c98e4cf-4d56-422e-a18a-80792f73fcf7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -269,10 +269,12 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.MovieCategorie", b =>
                 {
                     b.Property<int>("MovieId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     b.Property<int>("CategorieId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
                     b.HasKey("MovieId", "CategorieId");
 

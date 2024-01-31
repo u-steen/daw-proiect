@@ -52,6 +52,7 @@ public class CategorieRepository : ICategorieRepository
         var categorie = await _context.Categorii.FirstOrDefaultAsync(x => x.Id == id);
         if(categorie == null)
             return null;
+
         categorie.Nume = updatedCategorie.Nume;
         categorie.Descriere = updatedCategorie.Descriere;
         await _context.SaveChangesAsync();

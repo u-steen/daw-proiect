@@ -2,6 +2,7 @@ using backend.Data;
 using backend.Models;
 using backend.Repositories.Categorie;
 using backend.Repositories.Movie;
+using backend.Repositories.MovieCategorie;
 using backend.Repositories.Review;
 using backend.Service.TokenService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,6 +27,8 @@ builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IMovieCategorieRepository, MovieCategorieRepository>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",

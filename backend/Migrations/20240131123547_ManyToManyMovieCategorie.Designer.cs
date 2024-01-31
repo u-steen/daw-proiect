@@ -11,7 +11,7 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240129215918_ManyToManyMovieCategorie")]
+    [Migration("20240131123547_ManyToManyMovieCategorie")]
     partial class ManyToManyMovieCategorie
     {
         /// <inheritdoc />
@@ -50,13 +50,13 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "35d4fad2-1cbe-43c9-bbae-215b87d49075",
+                            Id = "653b1a6f-7f78-49c6-b94a-ef943683e4f2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2d9259e8-f5c5-45a3-847d-036a9d92c08e",
+                            Id = "9c98e4cf-4d56-422e-a18a-80792f73fcf7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -234,6 +234,10 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Descriere")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Nume")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -268,10 +272,12 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.MovieCategorie", b =>
                 {
                     b.Property<int>("MovieId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
 
                     b.Property<int>("CategorieId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
                     b.HasKey("MovieId", "CategorieId");
 

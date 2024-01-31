@@ -78,6 +78,8 @@ namespace backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nume = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descriere = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -284,8 +286,8 @@ namespace backend.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2d9259e8-f5c5-45a3-847d-036a9d92c08e", null, "User", "USER" },
-                    { "35d4fad2-1cbe-43c9-bbae-215b87d49075", null, "Admin", "ADMIN" }
+                    { "653b1a6f-7f78-49c6-b94a-ef943683e4f2", null, "Admin", "ADMIN" },
+                    { "9c98e4cf-4d56-422e-a18a-80792f73fcf7", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
