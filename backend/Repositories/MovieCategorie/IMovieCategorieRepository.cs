@@ -5,4 +5,5 @@ using Models;
 public interface IMovieCategorieRepository
 {
     Task<List<Categorie>> GetMovieCategorii(int movieId);
+    Task<MovieCategorie> CreateMovieCategorieAsync(MovieCategorie mc);
 }

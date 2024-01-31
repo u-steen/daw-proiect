@@ -13,9 +13,10 @@ public class MovieCategorieRepository : IMovieCategorieRepository
     {
         _context = context;
     }
+
     public async Task<List<Categorie>> GetMovieCategorii(int movieId)
     {
-        var movie = _context.Movies.FirstOrDefaultAsync(x => x.Id == movieId);
+        var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == movieId);
         return await _context.MovieCategorii
             .Where(mc => mc.MovieId == movie.Id)
             .Select(categorie => new Categorie
@@ -25,5 +26,12 @@ public class MovieCategorieRepository : IMovieCategorieRepository
                 Descriere = categorie.Categorie.Descriere,
             })
             .ToListAsync();
+    }
+
+    public async Task<MovieCategorie> CreateMovieCategorieAsync(MovieCategorie movieCategorie)
+    {
+        _context.AddAsync(movieCategorie);
+        _context.SaveChangesAsync();
+        return movieCategorie;
     }
 }
