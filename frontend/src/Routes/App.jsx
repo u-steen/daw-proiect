@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import Loading from "./Components/Loading.jsx";
+import Loading from "../Components/Loading.jsx";
+import { Link } from "react-router-dom";
 
-const Movie = ({ title, director, year }) => (
+const MovieElement = ({ title, director, year }) => (
   <div className={"p-7 border-slate-800 border-b-2 hover:bg-blue-400"}>
     <h1 className={"text-3xl"}>{title}</h1>
     <h2 className={"text-xl"}>
@@ -16,9 +17,7 @@ const MovieList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch("http://localhost:5070/api/movie");
-      console.log(result);
       const data = await result.json();
-      console.log(data);
       setMovies(data);
       setLoading(false);
     };
@@ -34,17 +33,16 @@ const MovieList = () => {
 
   return (
     <div className={"bg-blue-200 w-3/4 mx-auto my-0"}>
-      <div className={"border-b-4 border-slate-800 p-6 flex justify-center"}>
-        <h1 className={"text-5xl font-bold"}>All movies</h1>
-      </div>
       {movies.map((movie) => {
         return (
-          <Movie
-            key={movie.id}
-            title={movie.titlu}
-            director={movie.director}
-            year={movie.an}
-          />
+          <Link to={`movie/${movie.id}`}>
+            <MovieElement
+              key={movie.id}
+              title={movie.titlu}
+              director={movie.director}
+              year={movie.an}
+            />
+          </Link>
         );
       })}
     </div>
@@ -54,6 +52,9 @@ const MovieList = () => {
 function App() {
   return (
     <>
+      <div className={"border-b-4 border-slate-800 p-6 flex justify-center"}>
+        <h1 className={"text-5xl font-bold"}>All movies</h1>
+      </div>
       <MovieList />
     </>
   );
