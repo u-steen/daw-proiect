@@ -1,10 +1,8 @@
-import './App.css'
-
 function App() {
 
   return (
     <>
-        <h1>haha pula</h1>
+      <h1 className={"bg-blue-500 text-5xl"}>test</h1>
     </>
   )
 }
