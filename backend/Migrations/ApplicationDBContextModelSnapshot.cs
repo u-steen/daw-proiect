@@ -47,13 +47,13 @@ namespace backend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "653b1a6f-7f78-49c6-b94a-ef943683e4f2",
+                            Id = "ec94f886-d7d5-43b5-8bd6-ca48355cd6fa",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9c98e4cf-4d56-422e-a18a-80792f73fcf7",
+                            Id = "346cbda0-9612-400c-9b44-f28652c91593",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -241,7 +241,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorii", (string)null);
+                    b.ToTable("Categorii");
                 });
 
             modelBuilder.Entity("backend.Models.Movie", b =>
@@ -263,7 +263,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("backend.Models.MovieCategorie", b =>
@@ -280,7 +280,7 @@ namespace backend.Migrations
 
                     b.HasIndex("CategorieId");
 
-                    b.ToTable("MovieCategorii", (string)null);
+                    b.ToTable("MovieCategorii");
                 });
 
             modelBuilder.Entity("backend.Models.Review", b =>
@@ -288,6 +288,9 @@ namespace backend.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -304,9 +307,11 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -381,9 +386,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Review", b =>
                 {
+                    b.HasOne("backend.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("backend.Models.Movie", "Movie")
                         .WithMany("Reviews")
                         .HasForeignKey("MovieId");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Movie");
                 });

@@ -12,7 +12,8 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<Movie, MovieDto>();
         CreateMap<CreateMovieDto, Movie>();
-        CreateMap<Review, ReviewDto>();
+        CreateMap<Review, ReviewDto>()
+        .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.AppUser.UserName));
         CreateMap<CreateReviewDto, Review>();
         CreateMap<Categorie, CategorieDto>();
         CreateMap<CreateCategorieDto, Categorie>();

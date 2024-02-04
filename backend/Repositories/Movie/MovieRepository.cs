@@ -14,7 +14,7 @@ public class MovieRepository : IMovieRepository
     }
     public async Task<List<Models.Movie>> GetAllAsync(QueryObject query)
     {
-        var movies = _context.Movies.Include(m => m.Reviews).AsQueryable();
+        var movies = _context.Movies.Include(m => m.Reviews).ThenInclude(a => a.AppUser).AsQueryable();
         if (!string.IsNullOrWhiteSpace(query.titlu))
         {
             movies = movies.Where(m => m.Titlu.Contains(query.titlu));
@@ -35,7 +35,9 @@ public class MovieRepository : IMovieRepository
 
     public async Task<Models.Movie?> GetByIdAsync(int id)
     {
-        return await _context.Movies.Include(m => m.Reviews).FirstOrDefaultAsync(m => m.Id == id);
+        return await _context.Movies.Include(m => m.Reviews)
+        .ThenInclude(a => a.AppUser)
+        .FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public async Task<Models.Movie> CreateMovieAsync(Models.Movie movie)
