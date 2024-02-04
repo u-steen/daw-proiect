@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../Components/Loading";
 
+const ReviewList = () => {
+  return <h1>ReviewList</h1>;
+};
+
 const Movie = () => {
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState();
@@ -12,7 +16,6 @@ const Movie = () => {
       const data = await result.json();
       setLoading(false);
       setMovie(data);
-      console.log(movie);
     };
     fetchData();
   }, []);
@@ -26,11 +29,12 @@ const Movie = () => {
   return (
     <div className="w-3/4 mx-auto">
       <div className="flex justify-center items-baseline gap-3 bg-blue-200 border-b-2 border-b-slate-900">
-        <h1 className="text-4xl">{movie.titlu | upperCase}</h1>
+        <h1 className="text-4xl">{movie.titlu}</h1>
         <p>{movie.an}</p>
       </div>
       <h3>Director: {movie.director}</h3>
       <h3>Review-uri:</h3>
+      <ReviewList />
     </div>
   );
 };

@@ -5,6 +5,7 @@ using backend.Extensions;
 using backend.Models;
 using backend.Repositories.Movie;
 using backend.Repositories.Review;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,7 @@ public class ReviewController : ControllerBase
         return Ok(_mapper.Map<ReviewDto>(review));
     }
 
+    [Authorize]
     [HttpPost("{movieId:int}")]
     public async Task<IActionResult> Create([FromRoute] int movieId, [FromBody] CreateReviewDto createdReview)
     {

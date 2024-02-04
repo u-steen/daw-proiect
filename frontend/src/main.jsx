@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./Routes/App.jsx";
 import "./index.css";
 import Movie from "./Routes/Movie.jsx";
+import Auth from "./Routes/Auth.jsx";
+import Register from "./Routes/Register.jsx";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,14 @@ const router = createBrowserRouter([
   {
     path: "/movie/:movieId",
     element: <Movie />,
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 
