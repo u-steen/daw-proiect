@@ -35,9 +35,8 @@ const MovieList = () => {
     <div className={"bg-blue-200 w-3/4 mx-auto my-0"}>
       {movies.map((movie) => {
         return (
-          <Link to={`movie/${movie.id}`}>
+          <Link key={movie.id} to={`movie/${movie.id}`}>
             <MovieElement
-              key={movie.id}
               title={movie.titlu}
               director={movie.director}
               year={movie.an}
@@ -50,9 +49,37 @@ const MovieList = () => {
 };
 
 function App() {
+  const [loginStatus, setLoginStatus] = useState("");
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    console.log("Token: ", token);
+    if (token) setLoginStatus("Log out");
+    else setLoginStatus("Log In");
+  }, []);
+
   return (
     <>
-      <div className={"border-b-4 border-slate-800 p-6 flex justify-center"}>
+      <div className="flex">
+        {loginStatus === "Log In" ? (
+          <Link to="/auth">
+            <h3 className="text-xl ml-4 py-4 px-6 bg-slate-200 hover:bg-slate-300">
+              Log In / Register
+            </h3>
+          </Link>
+        ) : (
+          <h3
+            onClick={() => {
+              console.log("pula");
+            }}
+            className="text-xl ml-4 py-4 px-6 bg-slate-200 hover:bg-slate-300"
+          >
+            Log Out
+          </h3>
+        )}
+      </div>
+      <div
+        className={"border-b-4 border-slate-800 p-6 pt-12 flex justify-center"}
+      >
         <h1 className={"text-5xl font-bold"}>All movies</h1>
       </div>
       <MovieList />

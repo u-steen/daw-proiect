@@ -15,7 +15,6 @@ const LoginBox = () => {
       }),
     });
     const data = await response.json();
-    console.log(data);
     localStorage.setItem("userToken", data.token);
   };
   return (
