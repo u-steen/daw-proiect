@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Loading from "../Components/Loading";
 
+// Pipes equivalent in React
 const allCapsPipe = (str) => {
   return str.toUpperCase();
 };
-
 const capitalizeFirstLetterPipe = (str) => {
   if (str !== null) return str.charAt(0).toUpperCase() + str.slice(1);
 };

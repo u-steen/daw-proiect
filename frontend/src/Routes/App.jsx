@@ -67,12 +67,7 @@ function App() {
             </h3>
           </Link>
         ) : (
-          <h3
-            onClick={() => {
-              console.log("pula");
-            }}
-            className="text-xl ml-4 py-4 px-6 bg-slate-200 hover:bg-slate-300"
-          >
+          <h3 className="text-xl ml-4 py-4 px-6 bg-slate-200 hover:bg-slate-300">
             Log Out
           </h3>
         )}
