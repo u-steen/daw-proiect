@@ -2,6 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Loading from "../Components/Loading";
 
+const allCapsPipe = (str) => {
+  return str.toUpperCase();
+};
+
+const capitalizeFirstLetterPipe = (str) => {
+  if (str !== null) return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const ReviewList = ({ reviews }) => {
   return (
     <div>
@@ -13,7 +21,9 @@ const ReviewList = ({ reviews }) => {
             className="bg-blue-300 border-b-2 border-slate-800 p-4 mt-4 rounded-md"
           >
             <div className="flex justify-between border-b-2 border-slate-800 mb-4">
-              <h1 className="font-bold text-lg">{review.createdBy}</h1>
+              <h1 className="font-bold text-lg">
+                {capitalizeFirstLetterPipe(review.createdBy)}
+              </h1>
               <h1>{review.rating}/10</h1>
             </div>
             <p className="text-sm">{review.comment}</p>
@@ -52,7 +62,7 @@ const Movie = () => {
         </Link>
       </div>
       <div className="flex justify-center items-baseline gap-3 bg-blue-200 border-b-2 border-b-slate-900 pt-6">
-        <h1 className="text-4xl">{movie.titlu}</h1>
+        <h1 className="text-4xl">{allCapsPipe(movie.titlu)}</h1>
         <p>{movie.an}</p>
       </div>
       <h3>Director: {movie.director}</h3>
